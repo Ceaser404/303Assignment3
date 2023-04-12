@@ -1,88 +1,41 @@
 #include <iostream>
 #include "Queue.h"
 
-
 using namespace std;
 
 int main()
 {
-    Linkedlist list;
+    Linkedlist queue;
      
     // Inserting nodes
-    list.push_back(4);
-    list.push_back(9);
-    list.push_back(2);
+    queue.push_back(4);
+    queue.push_back(9);
+    queue.push_back(2);
   
     cout << "Elements of the list are: ";
   
     // Print the list
-    list.printList();
+    queue.printList();
     cout << endl;
     
-    list.front();    
+    // front member function outputs the front element of the queue
+    queue.front();    
     
-    int front;
+    int poppedFront;
     
-    front = list.pop_front();
+    // pop_front removes the front element of the queue and returns it
+    poppedFront = queue.pop_front();
     
-    cout << "Removed value from front of Queue is: " << front << endl;
+    // output to user what pop_front does and display removed element
+    cout << "Removed value from front of Queue is: " << poppedFront << endl;
     
-    cout << "Lastly, Elements of the list are: ";
-    list.printList();
+    cout << "Elements of the list are: ";
+    queue.printList();
     cout << endl;
 
-  
-    int num;
-    num = list.numElement();
-    cout << num << endl;
-    /*
-    // Delete node at position 2.
-    list.deleteNode(2);
-    
-    list.back();
-    
-    cout << "Elements of the list are: ";
-    list.printList();
-    cout << endl;
-    
-    cout << "Elements of the list are: ";
-    list.pop_front();
-    list.printList();
-    cout << endl;
-    
-    cout << "Elements of the list are: ";
-    list.pop_back();
-    list.printList();
-    cout << endl;
-    
-    cout << "Elements of the list are: ";
-    list.pop_back();
-    list.printList();
-    cout << endl;
-    
-    cout << "Elements of the list are: ";
-    list.push_back(3);
-    list.printList();
-    cout << endl;
-    
-    
-    list.pop_back();
-    cout << "Elements of the list are: ";
-    list.printList();
-    cout << endl;
-    
-    list.back();
-    
-    
-    list.pop_back();
-    cout << "Elements of the list are: ";
-    list.printList();
-    cout << endl;
-    
-    list.empty();
-    
-    list.back();
-    */
+    // numElement returns the number of elements in the queus
+    queue.numElement();
+   
     
     return 0;
 }

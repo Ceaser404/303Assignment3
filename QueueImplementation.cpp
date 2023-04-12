@@ -101,4 +101,3 @@ void Linkedlist::printList()
         temp = temp->next;
     }
 }
-

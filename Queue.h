@@ -1,3 +1,4 @@
+// Queue implemented as a linked list, making a node class necessary
 class Node {
     public:
         int data;
@@ -16,12 +17,13 @@ class Node {
         }
 };
 
+// Linked list will hold elements of the queue
 class Linkedlist {
     Node* head;
     Node* tail;
     
     public:
-        
+        // functions included for queue functionality
         Linkedlist() { head, tail = NULL; }
         
         void push_back(int);

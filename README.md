@@ -2,7 +2,7 @@
 
 MAIN FILE FOR BALANCED PARENTHESIS AND INFIX TO POSTFIX CONVERSION
 
-![Screenshot 2023-04-14 114219](https://user-images.githubusercontent.com/119560473/232105932-5795f06f-c28f-4681-a4f2-5e132a29befb.jpg)
+![Screenshot 2023-04-14 120046](https://user-images.githubusercontent.com/119560473/232109783-0590fb5b-f377-435e-9be2-62ac9cba320e.jpg)
 
 
 FUNCTION FOR BALANCED PARENTHESIS

@@ -71,7 +71,8 @@ EMPTY FUNCTION (Return whether queue is empty or not), NUMELEMENT FUNCTION (Retu
 
 DEMONSTRATING USE OF QUEUE FUNCTIONS
 
-![Screenshot 2023-04-14 115229](https://user-images.githubusercontent.com/119560473/232107978-f15c8066-fc40-4b95-8a1c-32c731ed0c80.jpg)
+![Screenshot 2023-04-14 120942](https://user-images.githubusercontent.com/119560473/232111540-365fba34-93d6-4eb0-913c-7e1ad7481d41.jpg)
+
 
 
 

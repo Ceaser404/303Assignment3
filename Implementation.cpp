@@ -8,7 +8,7 @@ using namespace std;
 // the string OPERATORS includes all operators handled
 const string Infix_To_Postfix::OPERATORS = "+-*/%()[]{}";
 // the array PRECEDENCE[] inludes the precedence associated with the operators
-const int Infix_To_Postfix::PRECEDENCE[] = { 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5 };
+const int Infix_To_Postfix::PRECEDENCE[] = { 1, 1, 2, 2, 2, 3, 4, 5, 6, 7, 8 };
 
 //
 string Infix_To_Postfix::convert(const string& expression) {
@@ -22,7 +22,7 @@ string Infix_To_Postfix::convert(const string& expression) {
         // isalnum checks if element is a number or upper or lower case letter
         if (isalnum(next_token[0])) {
             // push number/letter to the postfix output variable
-            cout << "push" << endl;
+            //cout << "push" << endl;
             postfix += next_token;
             postfix += " ";
         // if not a number or letter, check element with is_operator function
@@ -35,10 +35,13 @@ string Infix_To_Postfix::convert(const string& expression) {
     // Pop any remaining operators and append them to postfix
     cout << "Time to append operators" << endl;
     while (!operator_stack.empty()) {
-        char op = operator_stack.top();
-        operator_stack.pop();
-        postfix += op;
-        postfix += " ";
+        if (precedence(operator_stack.top()) < 3) {
+            postfix += operator_stack.top();
+            postfix += " ";
+            operator_stack.pop();                
+        } else {
+            operator_stack.pop();
+        }       
     }
     
     return postfix;
@@ -46,43 +49,54 @@ string Infix_To_Postfix::convert(const string& expression) {
 
 void Infix_To_Postfix::process_operator(char op) {
     // if operator stack is empty then simply push the operator to the stack
-    if (operator_stack.empty() && precedence(op) < 3) {
-        cout << "push " << op << " to operator_stack1" << endl;
+    if (operator_stack.empty()) {
+        //cout << "push " << op << " to operator_stack1" << endl;
         operator_stack.push(op);
         return;
     } 
-    if (operator_stack.empty()) {
-        return;
-    } else {
-        // if new operator is higher precedence...
-        if (precedence(op) > precedence(operator_stack.top())) {
-            // push the top of operator stack to postfix
-            char oporig = operator_stack.top();
-            operator_stack.pop();
-            postfix += oporig;
-            postfix += " ";
-            // push the current operator onto the operator stack
-            cout << "push " << op << " to operator_stack2" << endl;
-            if (precedence(op) < 3)
-                operator_stack.push(op);
-        // if new operator is same or lower precedence
+    // if new operator is higher precedence and not parenthesis
+    if (precedence(op) > precedence(operator_stack.top()) && precedence(op) < 3) {
+        // push the current operator onto the operator stack
+        operator_stack.push(op);
+        
+    // if new operator is higher precedence and parenthesis
+    } else if (precedence(op) > precedence(operator_stack.top()) && precedence(op) > 2){
+        // if operator is opening parenthesis
+        if (precedence(op)%2 == 1) {
+            operator_stack.push(op);
+            return;
+        // handles if closing parenthesis
         } else {
-        // Pop all stacked operators with equal
-        // or higher precedence than op.
-            while (!operator_stack.empty() && (operator_stack.top() != '(') && (precedence(op) <= precedence(operator_stack.top()))) {
+            do {
+            // appends and pops operator within parenthesis
+            if (precedence(operator_stack.top()) < 3) {
                 postfix += operator_stack.top();
                 postfix += " ";
+                operator_stack.pop(); 
+            // removes opening parenthesis
+            } else 
                 operator_stack.pop();
             }
-            if (op == ')') {
-                if (!operator_stack.empty() && (operator_stack.top() == '(')) {
-                    operator_stack.pop();
-                } else {
-                    throw "Unmatched close parentheses";
-                }
-            }
-            if (precedence(op) < 3)
+            // continue running until another closing parenthesis 
+            while (operator_stack.top()%2 == 0 || operator_stack.top() < 3);
+        }
+    // if current operator has lower or equal precedence than top of stack
+    } else {
+        // if top of stack is a parenthesis
+        if ((precedence(op) < precedence(operator_stack.top())) && precedence(operator_stack.top()) > 2) {
+            operator_stack.push(op);
+            return;
+        // if precedence is equal or top of stack is not parenthesis
+        } else {
+            if (precedence(operator_stack.top()) < 3) {
+                postfix += operator_stack.top();
+                operator_stack.pop();     
                 operator_stack.push(op);
+                postfix += " ";
+            } else {
+                operator_stack.pop();
+                operator_stack.push(op);
+            }            
         }
     }
 }
@@ -106,6 +120,7 @@ bool Infix_To_Postfix::isBalanced(const string& expression) {
                 break;                
             }
         }
+        
         
         // if the stack is not empty, and expression element is not an opening
         // parenthesis, check if element is a closing parenthesis
@@ -138,10 +153,11 @@ bool Infix_To_Postfix::isBalanced(const string& expression) {
             }
         }
     }
+    stack.pop();
+    if (!stack.empty())
+        return false;
     return true;
 }
-
-
 
 
 
